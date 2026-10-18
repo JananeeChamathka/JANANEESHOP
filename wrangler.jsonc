@@ -11,12 +11,6 @@
       "migrations_dir": "migrations"
     }
   ],
-  "r2_buckets": [
-    {
-      "binding": "BUCKET",
-      "bucket_name": "jananee-uploads"
-    }
-  ],
   "vars": {
     "ADMIN_OWNER_EMAIL": "jcskumara05@gmail.com",
     "ADMIN_LOGIN_USERNAME": "jananee",
