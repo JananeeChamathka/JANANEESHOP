@@ -70,3 +70,5 @@
 
 
 .invoice-discount{margin:24px 0;padding:20px;background:#edf3ed;border:1px solid #ccd9cc;border-radius:8px}.invoice-discount h2{font-size:17px;margin:0 0 14px}.invoice-discount label{font-size:14px;margin-bottom:8px}.invoice-discount p{font-size:12px;line-height:1.7;color:#485b4e;margin:8px 0 0}.invoice-discount input{background:#fff;font-size:16px}
+
+.cost-line-bottom button{font-size:12px;min-height:38px;padding:8px 10px}.cost-line-bottom small{flex-basis:100%;font-size:12px}#newIngredientForCake{margin:6px 0 10px;width:100%}#ingredientEditPicker{margin-bottom:22px}
