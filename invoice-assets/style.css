@@ -2,3 +2,56 @@
 
 button:disabled{opacity:.5;cursor:wait}.loading{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#f6f7f9;text-align:center;color:#8390a1}.loading-brand{font:34px Georgia;color:#172c46;letter-spacing:3px}.loading p{margin:25px 20px;max-width:400px;line-height:1.8}[hidden]{display:none!important}dialog{border:1px solid #e1e5eb;border-radius:12px;padding:28px;width:420px;max-width:calc(100vw - 30px);color:#172c46}dialog::backdrop{background:#10243d77}.dialog-top{display:flex;align-items:center;justify-content:space-between}.dialog-top button{padding:5px 10px;font-size:21px}#accountEmail{font-size:12px;color:#8b97a6;margin-bottom:25px}dialog h3{font-size:13px;margin-bottom:20px}#passwordMessage{font-size:12px;line-height:1.6;color:#9b7940}.account-note{font-size:11px;color:#8b97a6;line-height:1.7;border-top:1px solid #eee;padding-top:20px;margin-top:25px}@media print{dialog,.loading{display:none!important}}
 @media(max-width:850px){.aside-bottom{display:flex;flex-wrap:wrap;align-items:center;gap:5px;width:100%;border-top:1px solid #eee;padding:10px 0 0;margin:5px 0 0}.aside-bottom small{display:none}} #toast{max-width:90vw;line-height:1.7}
+
+
+/* JANANEE: quiet, practical interfaces. Based on ibelick/ui-skills baseline-ui. */
+@media screen {
+  body{font-family:Arial,sans-serif;font-size:14px;line-height:1.5;color:#263b40;background:#f5f5f1}
+  h1,h2,h3{text-wrap:balance;letter-spacing:normal}p{text-wrap:pretty}
+  button,input,select,textarea{font-family:inherit;font-size:14px}
+  button,a,input,select,textarea{touch-action:manipulation}
+  button{min-height:40px;border-radius:6px}
+  input,select,textarea{border-color:#cbd2cf;border-radius:6px;min-height:42px}
+  label{font-size:13px;color:#485b5e}small,em{font-size:12px}
+  :is(button,a,input,select,textarea,summary):focus-visible{outline:2px solid #35685a;outline-offset:3px}
+  .eyebrow,.step,.nav-label,.cake-category{letter-spacing:normal;font-size:12px;color:#526b63}
+  .primary,.submit{background:#285448;color:#fff}
+  .secondary{border-color:#cbd2cf}
+}
+
+@media screen {
+  aside{background:#fff;border-color:#dce1dc;padding:28px 18px}
+  aside .brand{color:#285448}.brand small{font-size:10px;letter-spacing:normal;color:#64736d}
+  .nav-label{margin-top:36px}.nav{font-size:14px;padding:12px;min-height:44px;margin-bottom:5px}
+  .nav.active{background:#e9efea;color:#244e41;box-shadow:inset 3px 0 #285448}
+  .nav[href]{color:#485b5e}.nav span{font-variant-numeric:tabular-nums}
+  main{padding-top:32px}header{padding-bottom:22px;border-bottom:1px solid #dce1dc;margin-bottom:28px}
+  h1{font:600 30px/1.2 Arial,sans-serif}header p{font-size:14px;color:#64736d}
+  .aside-bottom{font-size:12px;color:#52625c}.aside-bottom button{font-size:12px;min-height:36px}
+  .admin-stats{gap:0;background:#fff;border:1px solid #dce1dc;border-radius:8px;overflow:hidden}
+  .admin-stats>div{border:0;border-radius:0;border-right:1px solid #dce1dc;padding:24px}
+  .admin-stats>div:last-child{border-right:0}.admin-stats span{font-size:12px;letter-spacing:normal;color:#5d6b63}
+  .admin-stats strong,.admin-stats>div:last-child strong{font:600 28px/1.2 Arial,sans-serif;font-variant-numeric:tabular-nums;color:#263b40;margin-top:12px}
+  .admin-section-head h2,.cost-card h2{font:600 20px/1.3 Arial,sans-serif}
+  .admin-section-head p,.admin-cake p{font-size:13px;color:#64736d;line-height:1.6}
+  .admin-cake{border-color:#dce1dc;border-radius:8px}.admin-cake-image{aspect-ratio:4/3}
+  .admin-cake h3{font:600 19px/1.3 Arial,sans-serif;margin:8px 0}
+  .cake-category{font-size:12px;text-transform:none}.status-pill{font-size:12px;padding:5px 10px;background:#fff}
+  .admin-cake-actions button{font-size:12px;padding:8px 10px}.admin-cake-actions button:first-child{background:#285448;border-color:#285448}
+  .settings-card,.panel,.cost-card,.record,.expense-section{border-color:#dce1dc;border-radius:8px}
+  .section-title span{background:#edf1eb;color:#526b63;border-radius:4px;font-size:12px}.section-title h2{font-size:16px}
+  .toolbar,.record small,.ingredient-record small,.saved-cost small,.finance-table small{font-size:12px;color:#64736d}
+  .money-switch{gap:0;border-bottom:1px solid #ccd5cd;padding:0}.money-switch button{border:0;border-bottom:2px solid transparent;border-radius:0;background:none;padding:12px 16px;font-size:14px}
+  .money-switch button.active{background:none;color:#285448;border-color:#285448;font-weight:700}
+  .cost-line{background:#f5f6f2}.cake-cost-total{background:#e9efea}.cake-cost-total span{font-size:13px;letter-spacing:normal}
+  .cake-cost-total strong{font:600 27px Arial,sans-serif}.cost-line-name,.cost-line-compact .cost-line-name{font-size:14px}
+  .finance-table{font-size:14px}.finance-table th{background:#edf1eb;color:#485b5e}.finance-table td{border-color:#e1e5df}
+  strong,input[type=number],.finance-table{font-variant-numeric:tabular-nums}
+  .settings-note,.settings-message,.photo-upload small,.cake-checks label,.account-note{font-size:13px;color:#64736d}
+  .app-footer,.preview-heading,.print-tip{font-size:12px;letter-spacing:normal;color:#64736d}
+  .management-error{font-size:14px}.empty{font-size:14px;padding:40px 24px}
+  dialog{border-radius:8px}dialog h2{font-size:20px}
+  #toast{bottom:calc(20px + env(safe-area-inset-bottom));background:#285448}
+  @media(max-width:850px){aside{padding:18px}.nav{font-size:13px}main{padding:24px 18px}header{gap:12px}header .secondary{font-size:12px}h1{font-size:26px}.aside-bottom{gap:8px}}
+  @media(max-width:600px){.admin-stats>div{padding:18px}.admin-stats>div:last-child{border-top:1px solid #dce1dc}.admin-stats strong,.admin-stats>div:last-child strong{font-size:25px}.admin-section-head p{font-size:13px}.admin-section-head button{font-size:12px}.money-switch button{padding:12px 10px;font-size:13px}.cost-line-compact{gap:10px}}
+}
