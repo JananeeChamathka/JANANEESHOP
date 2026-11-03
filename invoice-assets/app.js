@@ -21,8 +21,8 @@ document.addEventListener('input',e=>{const a=e.target;if(a.dataset.field){model
 $('#items').onclick=e=>{if(e.target.dataset.remove!==undefined){if(model.items.length===1)return toast('Keep at least one item.');model.items.splice(+e.target.dataset.remove,1);dirty=true;renderItems();render()}};
 $('#add').onclick=()=>{if(model.items.length>=10)return toast('Maximum 10 items per invoice.');model.items.push({name:'',detail:'',qty:1,price:0});dirty=true;renderItems();render()};
 function valid(){for(const e of document.querySelectorAll('#editor input'))if(!e.reportValidity())return false;return true}
-async function api(path,options={}){const response=await fetch(path,{...options,headers:{'Content-Type':'application/json',...options.headers}});let data;try{data=await response.json()}catch{throw Error('The server could not be reached. Try again.')}if(response.status===401&&path!=='/api/auth/password'){$('#signinAgain').hidden=false;toast('Session expired. Export your draft backup, then select Sign in again.');throw Error(data.error||'Please sign in again.')}if(!response.ok)throw Error(data.error||'Unable to complete the request.');return data}
-async function loadRecords(){const data=await api('/api/invoices');records=data.invoices.map(r=>r.invoice);versions=new Map(data.invoices.map(r=>[r.invoice.id,r.revision]));userEmail=data.email;$('#accountEmail').textContent=userEmail;$('#count').textContent=records.length;return records}
+async function api(path,options={}){const response=await fetch(path,{cache:'no-store',...options,headers:{'Content-Type':'application/json',...options.headers}});let data;try{data=await response.json()}catch{throw Error('The server could not be reached. Try again.')}if(response.status===401&&path!=='/api/auth/password'){$('#signinAgain').hidden=false;toast('Session expired. Export your draft backup, then select Sign in again.');throw Error(data.error||'Please sign in again.')}if(!response.ok)throw Error(data.error||'Unable to complete the request.');return data}
+async function loadRecords(){const data=await api('/api/invoices');records=data.invoices.map(r=>r.invoice);versions=new Map(data.invoices.map(r=>[r.invoice.id,r.revision]));userEmail=data.email;$('#accountEmail').textContent=userEmail;$('#count').textContent=records.length;if($('#invoiceStat'))$('#invoiceStat').textContent=records.length;return records}
 async function uploadInvoice(invoice){
   const result=await api('/api/invoices/'+encodeURIComponent(invoice.id),{method:'PUT',body:JSON.stringify({invoice,revision:versions.get(invoice.id)||0})});
   if(!Number.isInteger(result.revision)||result.revision<1)throw Error('The server did not confirm this invoice. Your entries are still here. Please try saving again.');
@@ -33,8 +33,30 @@ async function uploadInvoice(invoice){
   return invoice;
 }
 function saveMessage(message,error=false){const el=$('#invoiceSaveMessage');if(el){el.textContent=message;el.hidden=!message;el.setAttribute?.('role',error?'alert':'status');} }
-async function save(){if(!valid()){saveMessage('Please complete the highlighted invoice field before saving.',true);return false;}saveMessage('Saving and verifying invoice…');if(records.some(r=>r.number===model.number&&r.id!==model.id)){saveMessage('Invoice number already exists. Use a unique number.',true);toast('Invoice number already exists. Use a unique number.');return false}const copy=JSON.parse(JSON.stringify(model));$('#save').disabled=true;try{await uploadInvoice(copy);const idx=records.findIndex(r=>r.id===copy.id);if(idx>=0)records[idx]=copy;else records.unshift(copy);dirty=JSON.stringify(model)!==JSON.stringify(copy);if(!dirty){model=defaults();bindForm();document.title='JANANEE ? Invoice Studio';saveMessage(copy.number+' saved and verified. Open Saved invoices to view it. Ready for '+model.number+'.');toast(copy.number+' saved. Ready for '+model.number);}else{render();toast(copy.number+' saved. Your latest changes still need saving.');}return true}catch(e){saveMessage(e.message,true);toast(e.message);return false}finally{$('#save').disabled=false}}
-$('#save').onclick=save;$('#print').onclick=async()=>{if(!valid())return;await document.fonts.ready;document.title=model.number+' · '+model.customer+' · JANANEE';window.print()};
+async function save({reset=true}={}){
+  if($('#save').disabled)return false;
+  if(!valid()){saveMessage('Please complete the highlighted invoice field before saving.',true);return false;}
+  if(records.some(r=>r.number===model.number&&r.id!==model.id)){saveMessage('Invoice number already exists. Use a unique number.',true);return false;}
+  const copy=JSON.parse(JSON.stringify(model));$('#save').disabled=true;saveMessage('Saving and verifying invoice…');
+  try{
+    await uploadInvoice(copy);const idx=records.findIndex(r=>r.id===copy.id);if(idx>=0)records[idx]=copy;else records.unshift(copy);
+    dirty=JSON.stringify(model)!==JSON.stringify(copy);
+    if(!dirty&&reset){model=defaults();bindForm();document.title='JANANEE · Invoice Studio';saveMessage(copy.number+' saved and verified. Open Saved invoices to view it. Ready for '+model.number+'.');toast(copy.number+' saved. Ready for '+model.number);}
+    else{render();saveMessage(copy.number+' saved and verified.'+(dirty?' Your latest changes still need saving.':' Ready to print.'));toast(copy.number+' saved.');}
+    return true;
+  }catch(e){saveMessage(e.message,true);toast(e.message);return false}finally{$('#save').disabled=false}
+}
+$('#save').onclick=()=>save();
+$('#print').onclick=async()=>{
+  if($('#print').disabled||$('#save').disabled)return;
+  const printable=JSON.stringify(model);$('#print').disabled=true;
+  try{
+    if(!await save({reset:false}))return;
+    await document.fonts.ready;
+    if(dirty||JSON.stringify(model)!==printable){saveMessage('The invoice changed while saving. Save & Print again to include your latest changes.',true);return;}
+    document.title=model.number+' · '+model.customer+' · JANANEE';window.print();
+  }catch(error){saveMessage(error.message,true)}finally{$('#print').disabled=false}
+};
 function tab(history){document.querySelectorAll('.management-panel').forEach(e=>e.hidden=true);$('#ingredientsTab').classList.remove('active');$('#oneByOneTab').classList.remove('active');$('#costingTab').classList.remove('active');$('#financeTab').classList.remove('active');$('#customersTab').classList.remove('active');$('#galleryTab').classList.remove('active');$('#settingsTab').classList.remove('active');$('#adminTitle').textContent=history?'Saved invoices.':'Your invoice, beautifully made.';$('#adminSubtitle').textContent='The original JANANEE invoice design, ready for your next customer.';$('#new').hidden=false;$('#editor').hidden=history;$('#history').hidden=!history;$('#historyTab').classList.toggle('active',history);$('#editorTab').classList.toggle('active',!history);if(history)historyList()}
 $('#historyTab').onclick=async()=>{try{await loadRecords();tab(true)}catch(e){toast(e.message)}};$('#editorTab').onclick=()=>tab(false);$('#new').onclick=()=>{if(dirty&&!confirm('Start a new invoice? The current draft will be replaced. Save it first if you want to keep it.'))return;model=defaults();model.customer='';model.items=[{name:'',detail:'',qty:1,price:0}];dirty=false;bindForm();tab(false)};
 function historyList(){const q=$('#search').value.toLowerCase();const rows=records.filter(r=>(r.customer+' '+r.number).toLowerCase().includes(q));$('#records').innerHTML=rows.length?rows.map(r=>`<div class="record"><div><strong>${esc(r.customer)}</strong><small>${esc(r.number)} · ${esc(r.date)} · LKR ${money(totals(r).total)}</small></div><div><button data-open="${esc(r.id)}">Open</button><button data-delete="${esc(r.id)}">Delete</button></div></div>`).join(''):'<div class="empty">No saved invoices yet. Save your first invoice in the editor.</div>'}
