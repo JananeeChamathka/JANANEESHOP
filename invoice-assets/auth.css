@@ -27,3 +27,6 @@
  .password-wrap button{font-size:12px}.story .eyebrow{color:#526b53}.form-side label{font-size:14px}
  @media(max-width:760px){.form-side{min-height:100dvh}.mobile-brand{color:#285448;margin-bottom:40px}}
 }
+@media screen{
+body{background:#fff8e9;color:#30262e}.auth-shell .story{background:#f6b9cf;color:#30262e;border-right:2px solid #30262e}.story h1{font:bold 58px/1.06 Georgia,serif;letter-spacing:-2px}.story p,.story footer,.story .eyebrow,.wordmark,.wordmark span{color:#30262e}.form-side{background:#fff8e9;background-image:radial-gradient(#8c756622 .75px,transparent .75px);background-size:7px 7px}.auth-card{padding:30px;border:2px solid #30262e;border-radius:20px;box-shadow:7px 7px 0 #30262e;background:#f2e8ff;max-width:430px}.submit{background:#ffe596;border:2px solid #30262e;box-shadow:3px 3px 0 #30262e;border-radius:10px;color:#30262e;font-weight:800}.form-side input{border:2px solid #30262e;border-radius:9px;background:#fffdf7}.privacy,.privacy a,.text-button{color:#514258}h2{font:bold 32px Georgia,serif}@media(max-width:760px){.form-side{padding:30px 22px}.auth-card{padding:24px;width:100%}.mobile-brand{margin-bottom:24px;color:#30262e}}
+}

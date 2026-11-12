@@ -74,3 +74,13 @@
 .cost-line-bottom button{font-size:12px;min-height:38px;padding:8px 10px}.cost-line-bottom small{flex-basis:100%;font-size:12px}#newIngredientForCake{margin:6px 0 10px;width:100%}#ingredientEditPicker{margin-bottom:22px}
 
 .invoice-save-message{padding:14px 18px;margin:0 0 20px;border:1px solid #bed0bd;border-radius:6px;background:#edf3ed;color:#285448;font-size:14px}.invoice-save-message[role=alert]{border-color:#dbb6ae;background:#fff1ed;color:#853d32}@media print{.invoice-save-message{display:none!important}}
+@media screen{
+:root{--ink:#30262e;--line:#30262e;--muted:#715c6a;--paper:#fff8e9}body{background:#fff8e9;color:#30262e}aside{background:#f2e8ff;border-right:2px solid #30262e}.brand,.brand span,.brand small,.nav-label{color:#30262e}.nav{border:2px solid transparent;border-radius:12px;color:#30262e}.nav.active{background:#f6b9cf;border:2px solid #30262e;box-shadow:3px 3px 0 #30262e}.aside-bottom{border-top:2px solid #30262e}main>header{border-bottom:2px solid #30262e}h1{font-family:Georgia,serif;font-weight:800}button.primary,.primary{background:#f6b9cf;color:#30262e;border:2px solid #30262e;border-radius:10px;box-shadow:3px 3px 0 #30262e}button.secondary,.secondary,.aside-bottom button{border:2px solid #30262e;border-radius:9px;background:#fff8e9;color:#30262e}.admin-stats{border:2px solid #30262e;border-radius:16px;box-shadow:5px 5px 0 #30262e;overflow:hidden;background:#fff8e9}.admin-stats>div{background:#ffe596;border-right:2px solid #30262e}.admin-stats>div:nth-child(2){background:#f6b9cf}.admin-stats>div:nth-child(3){background:#d9cbf3}.admin-stats strong{color:#30262e}.admin-cake{border:2px solid #30262e;border-radius:14px;background:#fffdf7;box-shadow:4px 4px 0 #30262e;overflow:hidden}.money-switch{border-color:#30262e}.money-switch button.active{background:#d9cbf3;color:#30262e;border:2px solid #30262e;border-radius:10px}.card,.management-card,.cost-line,.money-card{border:2px solid #30262e;border-radius:14px;background:#fffdf7}.invoice-discount{background:#ffe596;border:2px solid #30262e}input,select,textarea{border-color:#75616e;border-radius:8px}dialog{border:2px solid #30262e;border-radius:18px;box-shadow:7px 7px 0 #30262e;background:#fff8e9}:is(button,a,input,select,textarea):focus-visible{outline:3px solid #8a4b91;outline-offset:3px}
+}
+@media print{#previewDataNotice,#galleryPanel,#settingsPanel,#customersPanel,#financePanel{display:none!important}}
+/* Keep the invoice preview level with the top of the details form. */
+@media screen{
+ .workspace{align-items:start}
+ .workspace>.preview-area{align-self:start;margin:0 auto}
+ .preview-area .preview-heading{margin-top:0}
+}
